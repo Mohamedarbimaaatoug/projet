@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
-import api from '../api/axios';
+import api, { BACKEND_URL } from '../api/axios';
 import { StatusBadge } from './DashboardPage';
 
 const STATUSES = ['Toutes', 'Nouveau', 'En cours', 'Résolu', 'Refusé'];
@@ -233,7 +233,7 @@ function TreatModal({ reclamation: c, onClose, onUpdated }) {
           <div className="form-group">
             <label className="form-label">Photo jointe</label>
             <img
-              src={`http://localhost:5000${c.photoUrl}`}
+              src={`${BACKEND_URL}${c.photoUrl}`}
               alt="Photo réclamation"
               style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover', borderRadius: 10, border: '1px solid var(--border)' }}
             />

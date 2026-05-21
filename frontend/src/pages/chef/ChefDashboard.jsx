@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
-import api from '../../api/axios';
+import api, { BACKEND_URL } from '../../api/axios';
 import { StatusBadge } from '../DashboardPage';
 
 const STATUS_TABS = ['Toutes', 'En cours', 'Résolu'];
@@ -188,7 +188,7 @@ function ReclamationCard({ reclamation: c, onAction }) {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12, flexShrink: 0 }}>
         {c.photoUrl && (
           <img
-            src={`http://localhost:5000${c.photoUrl}`}
+            src={`${BACKEND_URL}${c.photoUrl}`}
             alt="Photo"
             style={{ width: 100, height: 80, objectFit: 'cover', borderRadius: 8, border: '1px solid var(--border)' }}
           />
@@ -260,7 +260,7 @@ function InterventionModal({ reclamation: c, chef, onClose, onUpdated }) {
           <div style={{ marginBottom: 20 }}>
             <label className="form-label">📷 Photo du problème</label>
             <img
-              src={`http://localhost:5000${c.photoUrl}`}
+              src={`${BACKEND_URL}${c.photoUrl}`}
               alt="Photo réclamation"
               style={{ maxWidth: '100%', maxHeight: 180, objectFit: 'cover', borderRadius: 10, border: '1px solid var(--border)' }}
             />

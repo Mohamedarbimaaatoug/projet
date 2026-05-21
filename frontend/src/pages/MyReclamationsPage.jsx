@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import api from '../api/axios';
+import api, { BACKEND_URL } from '../api/axios';
 import { StatusBadge } from './DashboardPage';
 
 const STATUSES = ['Toutes', 'Nouveau', 'En cours', 'Résolu', 'Refusé'];
@@ -104,7 +104,7 @@ function ReclamationCard({ reclamation: r, onClick }) {
           {r.photoUrl && (
             <div style={{ marginTop: 8 }}>
               <img
-                src={`http://localhost:5000${r.photoUrl}`}
+                src={`${BACKEND_URL}${r.photoUrl}`}
                 alt="Photo"
                 style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8, border: '1px solid var(--border)' }}
               />
@@ -143,7 +143,7 @@ function ReclamationModal({ reclamation: r, onClose }) {
           <div className="form-group">
             <label className="form-label">Photo jointe</label>
             <img
-              src={`http://localhost:5000${r.photoUrl}`}
+              src={`${BACKEND_URL}${r.photoUrl}`}
               alt="Photo réclamation"
               style={{ maxWidth: '100%', borderRadius: 10, border: '1px solid var(--border)' }}
             />

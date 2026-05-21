@@ -7,7 +7,8 @@ const path = require('path');
 const app = express();
 
 // Middleware
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+app.use(cors({ origin: frontendUrl, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -24,9 +25,19 @@ app.use('/api/chef', require('./routes/chef'));
 app.get('/api/health', (req, res) => res.json({ status: 'ok', time: new Date() }));
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
+const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URL;
+if (!mongoUri) {
+  console.error('❌ Erreur: MONGODB_URI ou MONGO_URL est absent des variables d\'environnement.');
+  console.error('👉 Pour résoudre ceci dans Railway :');
+  console.error('   1. Ajoutez un service MongoDB à votre projet Railway.');
+  console.error('   2. Associez/lisez la variable "MONGO_URL" dans les variables de votre service Backend.');
+  console.error('   3. Ou ajoutez manuellement la variable MONGODB_URI dans l\'onglet "Variables" de votre backend.');
+  process.exit(1);
+}
+
+mongoose.connect(mongoUri)
   .then(async () => {
-    console.log('✅ MongoDB connecté à:', process.env.MONGODB_URI);
+    console.log('✅ MongoDB connecté avec succès.');
     
     // Seed Chef accounts if they do not exist
     try {
