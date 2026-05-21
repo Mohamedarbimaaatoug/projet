@@ -28,6 +28,9 @@ async function startTunnel() {
     console.log(`👉 Utilisez cette URL comme VITE_API_URL dans Netlify !`);
     console.log('\x1b[32m==================================================\x1b[0m\n');
     console.log('Appuyez sur Ctrl+C pour arrêter le tunnel.');
+    
+    // Garder le processus Node.js actif
+    setInterval(() => {}, 60000);
   } catch (err) {
     console.error('❌ Erreur lors de la création du tunnel ngrok :', err.message);
     process.exit(1);
