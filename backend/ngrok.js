@@ -18,10 +18,15 @@ if (!authtoken) {
 async function startTunnel() {
   try {
     console.log(`⏳ Connexion à ngrok pour exposer le port ${port}...`);
-    const listener = await ngrok.forward({
+    const options = {
       addr: port,
       authtoken: authtoken
-    });
+    };
+    if (process.env.NGROK_DOMAIN) {
+      options.domain = process.env.NGROK_DOMAIN;
+      console.log(`📡 Utilisation du domaine fixe : ${process.env.NGROK_DOMAIN}`);
+    }
+    const listener = await ngrok.forward(options);
     console.log('\n\x1b[32m==================================================\x1b[0m');
     console.log(`✅ Tunnel ngrok démarré avec succès !`);
     console.log(`🔗 URL publique de votre Backend : \x1b[36m${listener.url()}\x1b[0m`);
